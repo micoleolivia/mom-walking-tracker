@@ -552,12 +552,12 @@
       </div>
     </div>
 
-    <div class="message-box" id="message">No steps yet, lace up those shoes!</div>
+    <div class="message-box" id="message">No steps yet</div>
 
     <div id="rewardsList" style="margin-bottom:1rem;"></div>
 
     <div class="input-row">
-      <input type="number" id="stepInput" placeholder="Steps today" min="1" />
+      <input type="number" id="stepInput" placeholder="Steps today (e.g. 7500)" min="1" />
       <button class="btn-pink" onclick="addSteps()">Add steps</button>
     </div>
 
@@ -591,18 +591,18 @@
         <label>How are you feeling?</label>
         <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
         <div class="feeling-labels">
-          <span>😩 Absolutely exhausted</span>
-          <span>Easy peasy 😄</span>
+          <span>Absolutely exhausted</span>
+          <span>Easy peasy</span>
         </div>
-        <div class="feeling-display" id="feelingDisplay">Getting there 🙂</div>
+        <div class="feeling-display" id="feelingDisplay">Getting there</div>
       </div>
 
       <div class="note-section">
         <label>Notes (optional)</label>
-        <textarea class="note-input" id="noteInput" rows="2" placeholder="My knees hurt, best walk yet!..."></textarea>
+        <textarea class="note-input" id="noteInput" rows="2" placeholder="My knees hurt, best walk ever!..."></textarea>
       </div>
 
-      <button class="btn-green" onclick="saveDiaryEntry()">Save entry 🌿</button>
+      <button class="btn-green" onclick="saveDiaryEntry()">Save entry</button>
     </div>
 
     <div class="diary-entries" id="diaryEntries">
