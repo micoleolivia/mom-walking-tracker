@@ -605,6 +605,7 @@ const hrAvg = document.getElementById("heartRateAvg").value;
     const entry = {
       day: getDayLabel(),
       heartRate: hr ? parseInt(hr) : null,
+      heartRateAvg: hrAvg ? parseInt(hrAvg) : null,
       distance: dist ? parseFloat(dist) : null,
       feeling,
       note: note || null,
