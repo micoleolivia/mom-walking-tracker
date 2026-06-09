@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leopard Trail Prep 🐆</title>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,25 +17,9 @@
       color: #3a2a35;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    header h1 {
-      font-family: 'Nunito', sans-serif;
-      font-size: 2.4rem;
-      font-weight: 800;
-      color: #c0607a;
-      letter-spacing: -0.5px;
-    }
-
-    header p {
-      font-size: 0.95rem;
-      color: #c0a0b0;
-      margin-top: 5px;
-      font-style: italic;
-    }
+    header { text-align: center; margin-bottom: 2rem; }
+    header h1 { font-size: 2.4rem; font-weight: 800; color: #c0607a; letter-spacing: -0.5px; }
+    header p { font-size: 0.95rem; color: #c0a0b0; margin-top: 5px; font-style: italic; }
 
     .layout {
       display: grid;
@@ -44,8 +29,14 @@
       margin: 0 auto;
     }
 
+    .layout-full {
+      max-width: 900px;
+      margin: 1.5rem auto 0;
+    }
+
     @media (max-width: 650px) {
       .layout { grid-template-columns: 1fr; }
+      .charts-grid { grid-template-columns: 1fr !important; }
     }
 
     .card {
@@ -66,446 +57,125 @@
     }
 
     /* ── THERMOMETER ── */
-    .thermo-section {
-      display: flex;
-      gap: 1.5rem;
-      align-items: flex-end;
-      margin-bottom: 1.5rem;
-    }
+    .thermo-section { display: flex; gap: 1.5rem; align-items: flex-end; margin-bottom: 1.5rem; }
+    .thermo-outer { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .thermo-pct { font-size: 1.5rem; font-weight: 800; color: #c0607a; }
 
-    .thermo-outer {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .thermo-pct {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #c0607a;
-    }
-
-    .thermo-container {
-      position: relative;
-      width: 52px;
-      height: 280px;
-    }
+    .thermo-container { position: relative; width: 52px; height: 280px; }
 
     .thermo-tube {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 44px;
-      width: 26px;
-      height: 222px;
-      background: #fdf0f5;
-      border-radius: 13px 13px 0 0;
-      overflow: hidden;
-      border: 1.5px solid #f5c5d5;
+      position: absolute; left: 50%; transform: translateX(-50%);
+      bottom: 44px; width: 26px; height: 222px;
+      background: #fdf0f5; border-radius: 13px 13px 0 0;
+      overflow: hidden; border: 1.5px solid #f5c5d5;
     }
 
     .thermo-fill {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
+      position: absolute; bottom: 0; left: 0; right: 0;
       background: linear-gradient(to top, #c0607a, #e8a0b8);
       border-radius: 13px 13px 0 0;
       transition: height 1s cubic-bezier(0.34, 1.4, 0.64, 1);
     }
 
     .thermo-bulb {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: #c0607a;
-      border: 1.5px solid #f5c5d5;
-      z-index: 2;
+      position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 44px; height: 44px; border-radius: 50%;
+      background: #c0607a; border: 1.5px solid #f5c5d5; z-index: 2;
     }
 
-    .tick {
-      position: absolute;
-      right: -42px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
+    .tick { position: absolute; right: -42px; display: flex; align-items: center; gap: 4px; }
     .tick-line { width: 8px; height: 1px; background: #f5c5d5; }
     .tick-label { font-size: 10px; color: #c0a0b0; white-space: nowrap; font-family: 'Nunito', sans-serif; }
 
-    .stats {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding-bottom: 44px;
-    }
-
-    .stat {
-      background: #fdf0f5;
-      border-radius: 14px;
-      padding: 10px 12px;
-    }
-
-    .stat-label {
-      font-size: 10px;
-      color: #c0a0b0;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 2px;
-      font-weight: 600;
-    }
-
-    .stat-value {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #c0607a;
-    }
-
+    .stats { flex: 1; display: flex; flex-direction: column; gap: 8px; padding-bottom: 44px; }
+    .stat { background: #fdf0f5; border-radius: 14px; padding: 10px 12px; }
+    .stat-label { font-size: 10px; color: #c0a0b0; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; font-weight: 600; }
+    .stat-value { font-size: 1.3rem; font-weight: 800; color: #c0607a; }
     .stat-sub { font-size: 10px; color: #c0b0b8; }
 
     .message-box {
       background: linear-gradient(135deg, #f0faf0, #e8f5e8);
-      border: 1px solid #c8e8c8;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-size: 0.92rem;
-      font-weight: 600;
-      font-style: italic;
-      color: #4a7a4a;
-      text-align: center;
-      margin-bottom: 1.2rem;
-      line-height: 1.5;
+      border: 1px solid #c8e8c8; border-radius: 14px;
+      padding: 12px 14px; font-size: 0.92rem; font-weight: 600;
+      font-style: italic; color: #4a7a4a; text-align: center;
+      margin-bottom: 1.2rem; line-height: 1.5;
     }
 
-    /* ── REWARDS ── */
-    .reward-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 7px 0;
-      border-bottom: 1px dashed #fdf0f5;
-      font-size: 0.82rem;
-    }
-
-    .reward-badge {
-      font-size: 10px;
-      background: #fdf0f5;
-      color: #c0607a;
-      border-radius: 20px;
-      padding: 3px 8px;
-      white-space: nowrap;
-      font-weight: 700;
-      border: 1px solid #f5c5d5;
-      min-width: 54px;
-      text-align: center;
-    }
-
-    .reward-badge.unlocked {
-      background: #e8f5e8;
-      color: #4a8a4a;
-      border-color: #c8e8c8;
-    }
-
+    .reward-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px dashed #fdf0f5; font-size: 0.82rem; }
+    .reward-badge { font-size: 10px; background: #fdf0f5; color: #c0607a; border-radius: 20px; padding: 3px 8px; white-space: nowrap; font-weight: 700; border: 1px solid #f5c5d5; min-width: 54px; text-align: center; }
+    .reward-badge.unlocked { background: #e8f5e8; color: #4a8a4a; border-color: #c8e8c8; }
     .reward-text { color: #7a5a68; line-height: 1.4; font-weight: 600; }
     .reward-text.unlocked { color: #3a6a3a; }
-
     .unlock-tick { margin-left: auto; font-size: 14px; opacity: 0; transition: opacity 0.3s; }
     .unlock-tick.show { opacity: 1; }
 
-    /* ── INPUT ── */
-    .input-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 1rem;
-      margin-bottom: 0.8rem;
-    }
-
+    .input-row { display: flex; gap: 8px; margin-top: 1rem; margin-bottom: 0.8rem; }
     .input-row input {
-      flex: 1;
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1.5px solid #f5c5d5;
-      font-size: 0.9rem;
-      font-family: 'Nunito', sans-serif;
-      background: #fdf6f9;
-      color: #3a2a35;
-      outline: none;
-      font-weight: 600;
+      flex: 1; padding: 10px 12px; border-radius: 12px;
+      border: 1.5px solid #f5c5d5; font-size: 0.9rem;
+      font-family: 'Nunito', sans-serif; background: #fdf6f9;
+      color: #3a2a35; outline: none; font-weight: 600;
     }
-
     .input-row input:focus { border-color: #c0607a; }
 
-    .btn-pink {
-      padding: 10px 16px;
-      border-radius: 12px;
-      border: none;
-      background: #c0607a;
-      color: #fff;
-      font-size: 0.88rem;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      transition: background 0.2s;
-      white-space: nowrap;
-    }
+    .btn-pink { padding: 10px 16px; border-radius: 12px; border: none; background: #c0607a; color: #fff; font-size: 0.88rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-weight: 700; transition: background 0.2s; white-space: nowrap; }
     .btn-pink:hover { background: #a04a62; }
 
-    .btn-green {
-      width: 100%;
-      padding: 10px;
-      border-radius: 12px;
-      border: none;
-      background: #8aba8a;
-      color: #fff;
-      font-size: 0.9rem;
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 700;
-      transition: background 0.2s;
-      margin-top: 10px;
-    }
+    .btn-green { width: 100%; padding: 10px; border-radius: 12px; border: none; background: #8aba8a; color: #fff; font-size: 0.9rem; cursor: pointer; font-family: 'Nunito', sans-serif; font-weight: 700; transition: background 0.2s; margin-top: 10px; }
     .btn-green:hover { background: #6aa06a; }
 
-    .trail-label {
-      text-align: center;
-      font-size: 10px;
-      color: #c0a0b0;
-      margin-top: 4px;
-      font-weight: 600;
-    }
+    .trail-label { text-align: center; font-size: 10px; color: #c0a0b0; margin-top: 4px; font-weight: 600; }
 
-    /* ── LOG ── */
     .log-section { margin-top: 1rem; }
-    .log-title {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #c0a0b0;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-    .log-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.82rem;
-      padding: 5px 0;
-      border-bottom: 1px dashed #fdf0f5;
-      color: #9a7a88;
-      font-weight: 600;
-    }
+    .log-title { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #c0a0b0; margin-bottom: 6px; font-weight: 700; }
+    .log-row { display: flex; justify-content: space-between; font-size: 0.82rem; padding: 5px 0; border-bottom: 1px dashed #fdf0f5; color: #9a7a88; font-weight: 600; }
     .log-row span:last-child { color: #c0607a; font-weight: 700; }
 
-    .reset-btn {
-      display: block;
-      margin: 0.8rem auto 0;
-      background: none;
-      border: none;
-      font-size: 11px;
-      color: #c0a0b0;
-      cursor: pointer;
-      text-decoration: underline;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 600;
-    }
+    .reset-btn { display: block; margin: 0.8rem auto 0; background: none; border: none; font-size: 11px; color: #c0a0b0; cursor: pointer; text-decoration: underline; font-family: 'Nunito', sans-serif; font-weight: 600; }
 
     /* ── DIARY ── */
-    .diary-form {
-      background: #fdf6f9;
-      border-radius: 16px;
-      padding: 1rem;
-      border: 1px solid #f5dde8;
-      margin-bottom: 1rem;
-    }
+    .diary-form { background: #fdf6f9; border-radius: 16px; padding: 1rem; border: 1px solid #f5dde8; margin-bottom: 1rem; }
+    .form-day-label { font-size: 0.9rem; font-weight: 700; font-style: italic; color: #c0607a; margin-bottom: 0.8rem; }
 
-    .form-day-label {
-      font-size: 0.9rem;
-      font-weight: 700;
-      font-style: italic;
-      color: #c0607a;
-      margin-bottom: 0.8rem;
-    }
-
-    .entry-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .entry-field label {
-      display: block;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #c0a0b0;
-      margin-bottom: 3px;
-      font-weight: 700;
-    }
-
-    .entry-field input[type="number"] {
-      width: 100%;
-      padding: 7px 10px;
-      border-radius: 10px;
-      border: 1.5px solid #f5c5d5;
-      font-size: 0.88rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 600;
-      background: #fff;
-      color: #3a2a35;
-      outline: none;
-    }
-
+    .entry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+    .entry-field label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #c0a0b0; margin-bottom: 3px; font-weight: 700; }
+    .entry-field input[type="number"] { width: 100%; padding: 7px 10px; border-radius: 10px; border: 1.5px solid #f5c5d5; font-size: 0.88rem; font-family: 'Nunito', sans-serif; font-weight: 600; background: #fff; color: #3a2a35; outline: none; }
     .entry-field input:focus { border-color: #c0607a; }
 
     .feeling-section { margin-bottom: 10px; }
+    .feeling-section label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #c0a0b0; display: block; margin-bottom: 6px; font-weight: 700; }
+    input[type="range"].feeling-slider { width: 100%; -webkit-appearance: none; height: 5px; border-radius: 3px; background: linear-gradient(to right, #f5c5d5, #a8d8a8); outline: none; margin-bottom: 6px; }
+    input[type="range"].feeling-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #c0607a; cursor: pointer; border: 2px solid #fff; box-shadow: 0 1px 4px rgba(192,96,122,0.3); }
+    .feeling-labels { display: flex; justify-content: space-between; font-size: 12px; color: #b08898; font-weight: 700; }
+    .feeling-display { text-align: center; font-size: 1rem; font-weight: 700; font-style: italic; color: #c0607a; margin-top: 6px; min-height: 22px; }
 
-    .feeling-section label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #c0a0b0;
-      display: block;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-
-    input[type="range"].feeling-slider {
-      width: 100%;
-      -webkit-appearance: none;
-      height: 5px;
-      border-radius: 3px;
-      background: linear-gradient(to right, #f5c5d5, #a8d8a8);
-      outline: none;
-      margin-bottom: 6px;
-    }
-
-    input[type="range"].feeling-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 20px; height: 20px;
-      border-radius: 50%;
-      background: #c0607a;
-      cursor: pointer;
-      border: 2px solid #fff;
-      box-shadow: 0 1px 4px rgba(192,96,122,0.3);
-    }
-
-    .feeling-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 12px;
-      color: #b08898;
-      font-weight: 700;
-    }
-
-    .feeling-display {
-      text-align: center;
-      font-size: 1rem;
-      font-weight: 700;
-      font-style: italic;
-      color: #c0607a;
-      margin-top: 6px;
-      min-height: 22px;
-    }
-
-    .note-section label {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #c0a0b0;
-      display: block;
-      margin-bottom: 4px;
-      font-weight: 700;
-    }
-
-    textarea.note-input {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1.5px solid #f5c5d5;
-      font-size: 0.88rem;
-      font-family: 'Nunito', sans-serif;
-      font-weight: 600;
-      background: #fff;
-      color: #3a2a35;
-      resize: none;
-      outline: none;
-      line-height: 1.5;
-    }
-
+    .note-section label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: #c0a0b0; display: block; margin-bottom: 4px; font-weight: 700; }
+    textarea.note-input { width: 100%; padding: 8px 10px; border-radius: 10px; border: 1.5px solid #f5c5d5; font-size: 0.88rem; font-family: 'Nunito', sans-serif; font-weight: 600; background: #fff; color: #3a2a35; resize: none; outline: none; line-height: 1.5; }
     textarea.note-input:focus { border-color: #c0607a; }
 
-    /* saved entries */
-    .diary-entries {
-      max-height: 420px;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      padding-right: 4px;
-    }
-
+    .diary-entries { max-height: 320px; overflow-y: auto; display: flex; flex-direction: column; gap: 0.9rem; padding-right: 4px; }
     .diary-entries::-webkit-scrollbar { width: 4px; }
     .diary-entries::-webkit-scrollbar-thumb { background: #f5c5d5; border-radius: 4px; }
 
-    .saved-entry {
-      background: #f8fdf8;
-      border-radius: 14px;
-      padding: 0.9rem 1rem;
-      border: 1px solid #d8eed8;
+    .saved-entry { background: #f8fdf8; border-radius: 14px; padding: 0.9rem 1rem; border: 1px solid #d8eed8; }
+    .saved-entry-day { font-size: 0.9rem; font-weight: 800; color: #5a9a5a; margin-bottom: 8px; }
+    .saved-entry-details { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 6px; }
+    .saved-pill { background: #eef8ee; border: 1px solid #c8e8c8; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; color: #4a7a4a; }
+    .saved-note { font-size: 0.85rem; color: #7a8a7a; font-style: italic; line-height: 1.5; font-weight: 600; margin-top: 4px; padding-top: 6px; border-top: 1px dashed #d8eed8; }
+    .empty-diary { text-align: center; font-style: italic; font-weight: 600; color: #c0a0b0; font-size: 0.9rem; padding: 1.5rem 0; }
+    .diary-reset-row { display: flex; justify-content: flex-end; margin-top: 0.8rem; }
+
+    /* ── CHARTS ── */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
 
-    .saved-entry-day {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: #5a9a5a;
-      margin-bottom: 8px;
-    }
-
-    .saved-entry-details {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      margin-bottom: 6px;
-    }
-
-    .saved-pill {
-      background: #eef8ee;
-      border: 1px solid #c8e8c8;
-      border-radius: 20px;
-      padding: 3px 10px;
-      font-size: 11px;
-      font-weight: 700;
-      color: #4a7a4a;
-    }
-
-    .saved-note {
-      font-size: 0.85rem;
-      color: #7a8a7a;
-      font-style: italic;
-      line-height: 1.5;
-      font-weight: 600;
-      margin-top: 4px;
-      padding-top: 6px;
-      border-top: 1px dashed #d8eed8;
-    }
-
-    .empty-diary {
-      text-align: center;
-      font-style: italic;
-      font-weight: 600;
-      color: #c0a0b0;
-      font-size: 0.9rem;
-      padding: 1.5rem 0;
-    }
-
-    .diary-reset-row {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 0.8rem;
-    }
+    .chart-card { background: #fff; border-radius: 24px; padding: 1.5rem; box-shadow: 0 4px 24px rgba(180,100,130,0.08); border: 1px solid #f5dde8; }
+    .chart-title { font-size: 1rem; font-weight: 800; color: #c0607a; margin-bottom: 1rem; padding-bottom: 0.6rem; border-bottom: 1.5px dashed #f5dde8; }
+    .chart-empty { text-align: center; font-style: italic; font-weight: 600; color: #c0a0b0; font-size: 0.88rem; padding: 2rem 0; }
+    .chart-wrap { position: relative; height: 200px; }
   </style>
 </head>
 <body>
@@ -516,11 +186,9 @@
 </header>
 
 <div class="layout">
-
   <!-- LEFT -->
   <div class="card">
     <div class="card-title">🌡️ Step thermometer</div>
-
     <div class="thermo-section">
       <div class="thermo-outer">
         <div class="thermo-pct" id="pctLabel">0%</div>
@@ -532,7 +200,6 @@
         </div>
         <div class="trail-label" id="trailLabel">0 / 80,000</div>
       </div>
-
       <div class="stats">
         <div class="stat">
           <div class="stat-label">Total steps</div>
@@ -552,8 +219,7 @@
       </div>
     </div>
 
-    <div class="message-box" id="message">No steps yet</div>
-
+    <div class="message-box" id="message">No steps yet — lace up those shoes! 👟</div>
     <div id="rewardsList" style="margin-bottom:1rem;"></div>
 
     <div class="input-row">
@@ -565,17 +231,15 @@
       <div class="log-title">Step log</div>
       <div id="logList"></div>
     </div>
-
     <button class="reset-btn" onclick="resetSteps()">Reset steps</button>
   </div>
 
   <!-- RIGHT -->
   <div class="card">
-    <div class="card-title">Daily diary</div>
+    <div class="card-title">📓 Daily diary</div>
 
     <div class="diary-form">
       <div class="form-day-label" id="formDayLabel">Today's entry</div>
-
       <div class="entry-grid">
         <div class="entry-field">
           <label>Max heart rate (bpm)</label>
@@ -591,29 +255,46 @@
         <label>How are you feeling?</label>
         <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
         <div class="feeling-labels">
-          <span>Absolutely exhausted</span>
-          <span>Easy peasy</span>
+          <span>😩 Absolutely exhausted</span>
+          <span>Easy peasy 😄</span>
         </div>
-        <div class="feeling-display" id="feelingDisplay">Getting there</div>
+        <div class="feeling-display" id="feelingDisplay">Getting there 🙂</div>
       </div>
 
       <div class="note-section">
         <label>Notes (optional)</label>
-        <textarea class="note-input" id="noteInput" rows="2" placeholder="My knees hurt, best walk ever!..."></textarea>
+        <textarea class="note-input" id="noteInput" rows="2" placeholder="Scenic route, sore knees, proud moment..."></textarea>
       </div>
-
-      <button class="btn-green" onclick="saveDiaryEntry()">Save entry</button>
+      <button class="btn-green" onclick="saveDiaryEntry()">Save entry 🌿</button>
     </div>
 
     <div class="diary-entries" id="diaryEntries">
-      <div class="empty-diary" id="emptyDiary">No entries yet</div>
+      <div class="empty-diary">No entries yet — save your first walk! 🌸</div>
     </div>
-
     <div class="diary-reset-row">
       <button class="reset-btn" onclick="resetDiary()">Reset diary</button>
     </div>
   </div>
+</div>
 
+<!-- CHARTS ROW -->
+<div class="layout-full">
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-title">❤️ Heart rate by day</div>
+      <div id="hrEmpty" class="chart-empty">No heart rate data yet — keep logging! 💓</div>
+      <div class="chart-wrap" id="hrWrap" style="display:none">
+        <canvas id="hrChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">📍 Distance by day (km)</div>
+      <div id="distEmpty" class="chart-empty">No distance data yet — keep logging! 🥾</div>
+      <div class="chart-wrap" id="distWrap" style="display:none">
+        <canvas id="distChart"></canvas>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type="module">
@@ -651,6 +332,9 @@
   const DAYS = ["Mon 9 Jun","Tue 10 Jun","Wed 11 Jun","Thu 12 Jun","Fri 13 Jun",
                 "Sat 14 Jun","Sun 15 Jun","Mon 16 Jun","Tue 17 Jun","Wed 18 Jun","Thu 19 Jun"];
   const START = new Date("2026-06-09");
+
+  let hrChartInstance = null;
+  let distChartInstance = null;
 
   function getDayLabel() {
     const diff = Math.floor((new Date() - START) / 86400000);
@@ -727,24 +411,130 @@
   function renderDiary(data) {
     const entries = data.entries || [];
     const container = document.getElementById("diaryEntries");
-    const empty = document.getElementById("emptyDiary");
 
     if (entries.length === 0) {
-      container.innerHTML = `<div class="empty-diary" id="emptyDiary">No entries yet — save your first walk! 🌸</div>`;
-      return;
+      container.innerHTML = `<div class="empty-diary">No entries yet — save your first walk! 🌸</div>`;
+    } else {
+      container.innerHTML = entries.slice().reverse().map(e => {
+        const pills = [];
+        if (e.heartRate) pills.push(`❤️ ${e.heartRate} bpm max`);
+        if (e.distance) pills.push(`📍 ${e.distance} km`);
+        if (e.feeling) pills.push(FEELINGS[e.feeling]);
+        return `<div class="saved-entry">
+          <div class="saved-entry-day">${e.day}</div>
+          <div class="saved-entry-details">${pills.map(p => `<span class="saved-pill">${p}</span>`).join("")}</div>
+          ${e.note ? `<div class="saved-note">"${e.note}"</div>` : ""}
+        </div>`;
+      }).join("");
     }
 
-    container.innerHTML = entries.slice().reverse().map(e => {
-      const pills = [];
-      if (e.heartRate) pills.push(`❤️ ${e.heartRate} bpm max`);
-      if (e.distance) pills.push(`📍 ${e.distance} km`);
-      if (e.feeling) pills.push(FEELINGS[e.feeling]);
-      return `<div class="saved-entry">
-        <div class="saved-entry-day">${e.day}</div>
-        <div class="saved-entry-details">${pills.map(p => `<span class="saved-pill">${p}</span>`).join("")}</div>
-        ${e.note ? `<div class="saved-note">"${e.note}"</div>` : ""}
-      </div>`;
-    }).join("");
+    renderCharts(entries);
+  }
+
+  function renderCharts(entries) {
+    const hrData = entries.filter(e => e.heartRate).map(e => ({ x: e.day, y: e.heartRate }));
+    const distData = entries.filter(e => e.distance).map(e => ({ x: e.day, y: e.distance }));
+
+    const chartDefaults = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#c0607a',
+          bodyColor: '#3a2a35',
+          borderColor: '#f5c5d5',
+          borderWidth: 1,
+          titleFont: { family: 'Nunito', weight: '700' },
+          bodyFont: { family: 'Nunito', weight: '600' },
+        }
+      },
+      scales: {
+        x: {
+          ticks: { font: { family: 'Nunito', size: 10 }, color: '#c0a0b0', maxRotation: 40 },
+          grid: { color: '#fdf0f5' },
+          border: { color: '#f5dde8' }
+        },
+        y: {
+          ticks: { font: { family: 'Nunito', size: 10 }, color: '#c0a0b0' },
+          grid: { color: '#fdf0f5' },
+          border: { color: '#f5dde8' }
+        }
+      }
+    };
+
+    // Heart rate chart
+    if (hrData.length > 0) {
+      document.getElementById("hrEmpty").style.display = "none";
+      document.getElementById("hrWrap").style.display = "block";
+      if (hrChartInstance) hrChartInstance.destroy();
+      hrChartInstance = new Chart(document.getElementById("hrChart"), {
+        type: 'line',
+        data: {
+          labels: hrData.map(d => d.x),
+          datasets: [{
+            data: hrData.map(d => d.y),
+            borderColor: '#c0607a',
+            backgroundColor: 'rgba(192,96,122,0.08)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#c0607a',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          ...chartDefaults,
+          scales: {
+            ...chartDefaults.scales,
+            y: { ...chartDefaults.scales.y, title: { display: true, text: 'bpm', font: { family: 'Nunito', size: 10 }, color: '#c0a0b0' } }
+          }
+        }
+      });
+    } else {
+      document.getElementById("hrEmpty").style.display = "block";
+      document.getElementById("hrWrap").style.display = "none";
+      if (hrChartInstance) { hrChartInstance.destroy(); hrChartInstance = null; }
+    }
+
+    // Distance chart
+    if (distData.length > 0) {
+      document.getElementById("distEmpty").style.display = "none";
+      document.getElementById("distWrap").style.display = "block";
+      if (distChartInstance) distChartInstance.destroy();
+      distChartInstance = new Chart(document.getElementById("distChart"), {
+        type: 'line',
+        data: {
+          labels: distData.map(d => d.x),
+          datasets: [{
+            data: distData.map(d => d.y),
+            borderColor: '#8aba8a',
+            backgroundColor: 'rgba(138,186,138,0.08)',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#8aba8a',
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+            tension: 0.4,
+            fill: true
+          }]
+        },
+        options: {
+          ...chartDefaults,
+          scales: {
+            ...chartDefaults.scales,
+            y: { ...chartDefaults.scales.y, title: { display: true, text: 'km', font: { family: 'Nunito', size: 10 }, color: '#c0a0b0' } }
+          }
+        }
+      });
+    } else {
+      document.getElementById("distEmpty").style.display = "block";
+      document.getElementById("distWrap").style.display = "none";
+      if (distChartInstance) { distChartInstance.destroy(); distChartInstance = null; }
+    }
   }
 
   async function loadAll() {
@@ -805,9 +595,8 @@
     if (e.key === "Enter") window.addSteps();
   });
 
-  const slider = document.getElementById("feelingSlider");
-  slider.addEventListener("input", () => {
-    document.getElementById("feelingDisplay").textContent = FEELINGS[parseInt(slider.value)];
+  document.getElementById("feelingSlider").addEventListener("input", function() {
+    document.getElementById("feelingDisplay").textContent = FEELINGS[parseInt(this.value)];
   });
 
   loadAll();
