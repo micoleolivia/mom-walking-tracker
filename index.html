@@ -412,7 +412,7 @@
     const container = document.getElementById("diaryEntries");
 
     if (entries.length === 0) {
-      container.innerHTML = `<div class="empty-diary">No entries yet — save your first walk! 🌸</div>`;
+      container.innerHTML = `<div class="empty-diary">No entries yet</div>`;
     } else {
       container.innerHTML = entries.slice().reverse().map(e => {
         const pills = [];
