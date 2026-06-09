@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Leopard Trail Prep 🐆</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
       background: #fdf6f9;
       min-height: 100vh;
       padding: 2rem 1rem 4rem;
@@ -22,16 +22,16 @@
     }
 
     header h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.2rem;
-      font-weight: 600;
-      color: #b05a7a;
+      font-family: 'Nunito', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #c0607a;
       letter-spacing: -0.5px;
     }
 
     header p {
-      font-size: 0.88rem;
-      color: #b08a9a;
+      font-size: 0.95rem;
+      color: #c0a0b0;
       margin-top: 5px;
       font-style: italic;
     }
@@ -50,22 +50,22 @@
 
     .card {
       background: #fff;
-      border-radius: 20px;
+      border-radius: 24px;
       padding: 1.8rem;
       box-shadow: 0 4px 24px rgba(180,100,130,0.08);
       border: 1px solid #f5dde8;
     }
 
     .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem;
-      color: #b05a7a;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #c0607a;
       margin-bottom: 1.2rem;
       padding-bottom: 0.7rem;
-      border-bottom: 1px solid #f5dde8;
+      border-bottom: 1.5px dashed #f5dde8;
     }
 
-    /* ── LEFT CARD ── */
+    /* ── THERMOMETER ── */
     .thermo-section {
       display: flex;
       gap: 1.5rem;
@@ -81,9 +81,9 @@
     }
 
     .thermo-pct {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem;
-      color: #b05a7a;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #c0607a;
     }
 
     .thermo-container {
@@ -133,7 +133,7 @@
       gap: 4px;
     }
     .tick-line { width: 8px; height: 1px; background: #f5c5d5; }
-    .tick-label { font-size: 10px; color: #c0a0b0; white-space: nowrap; }
+    .tick-label { font-size: 10px; color: #c0a0b0; white-space: nowrap; font-family: 'Nunito', sans-serif; }
 
     .stats {
       flex: 1;
@@ -145,7 +145,7 @@
 
     .stat {
       background: #fdf0f5;
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 10px 12px;
     }
 
@@ -155,12 +155,13 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       margin-bottom: 2px;
+      font-weight: 600;
     }
 
     .stat-value {
-      font-family: 'Playfair Display', serif;
       font-size: 1.3rem;
-      color: #b05a7a;
+      font-weight: 800;
+      color: #c0607a;
     }
 
     .stat-sub { font-size: 10px; color: #c0b0b8; }
@@ -168,9 +169,10 @@
     .message-box {
       background: linear-gradient(135deg, #f0faf0, #e8f5e8);
       border: 1px solid #c8e8c8;
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 12px 14px;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
+      font-weight: 600;
       font-style: italic;
       color: #4a7a4a;
       text-align: center;
@@ -179,16 +181,12 @@
     }
 
     /* ── REWARDS ── */
-    .rewards {
-      margin-bottom: 1.2rem;
-    }
-
     .reward-row {
       display: flex;
       align-items: center;
       gap: 10px;
       padding: 7px 0;
-      border-bottom: 1px solid #fdf0f5;
+      border-bottom: 1px dashed #fdf0f5;
       font-size: 0.82rem;
     }
 
@@ -199,7 +197,7 @@
       border-radius: 20px;
       padding: 3px 8px;
       white-space: nowrap;
-      font-weight: 500;
+      font-weight: 700;
       border: 1px solid #f5c5d5;
       min-width: 54px;
       text-align: center;
@@ -211,94 +209,123 @@
       border-color: #c8e8c8;
     }
 
-    .reward-text {
-      color: #7a5a68;
-      line-height: 1.4;
-    }
+    .reward-text { color: #7a5a68; line-height: 1.4; font-weight: 600; }
+    .reward-text.unlocked { color: #3a6a3a; }
 
-    .reward-text.unlocked {
-      color: #3a6a3a;
-      font-weight: 500;
-    }
-
-    .unlock-tick {
-      margin-left: auto;
-      font-size: 14px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
+    .unlock-tick { margin-left: auto; font-size: 14px; opacity: 0; transition: opacity 0.3s; }
     .unlock-tick.show { opacity: 1; }
 
     /* ── INPUT ── */
     .input-row {
       display: flex;
       gap: 8px;
+      margin-top: 1rem;
       margin-bottom: 0.8rem;
     }
 
     .input-row input {
       flex: 1;
       padding: 10px 12px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1.5px solid #f5c5d5;
       font-size: 0.9rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
       background: #fdf6f9;
       color: #3a2a35;
       outline: none;
+      font-weight: 600;
     }
 
     .input-row input:focus { border-color: #c0607a; }
 
-    .input-row button {
+    .btn-pink {
       padding: 10px 16px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: none;
       background: #c0607a;
       color: #fff;
       font-size: 0.88rem;
       cursor: pointer;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
       transition: background 0.2s;
       white-space: nowrap;
     }
+    .btn-pink:hover { background: #a04a62; }
 
-    .input-row button:hover { background: #a04a62; }
+    .btn-green {
+      width: 100%;
+      padding: 10px;
+      border-radius: 12px;
+      border: none;
+      background: #8aba8a;
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+    .btn-green:hover { background: #6aa06a; }
 
     .trail-label {
       text-align: center;
       font-size: 10px;
       color: #c0a0b0;
       margin-top: 4px;
+      font-weight: 600;
     }
 
-    /* ── RIGHT CARD ── */
-    .diary-entries {
-      max-height: 560px;
-      overflow-y: auto;
+    /* ── LOG ── */
+    .log-section { margin-top: 1rem; }
+    .log-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #c0a0b0;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .log-row {
       display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
-      padding-right: 4px;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      padding: 5px 0;
+      border-bottom: 1px dashed #fdf0f5;
+      color: #9a7a88;
+      font-weight: 600;
+    }
+    .log-row span:last-child { color: #c0607a; font-weight: 700; }
+
+    .reset-btn {
+      display: block;
+      margin: 0.8rem auto 0;
+      background: none;
+      border: none;
+      font-size: 11px;
+      color: #c0a0b0;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
     }
 
-    .diary-entries::-webkit-scrollbar { width: 4px; }
-    .diary-entries::-webkit-scrollbar-thumb { background: #f5c5d5; border-radius: 4px; }
-
-    .diary-entry {
-      background: #fdf0f5;
-      border-radius: 14px;
+    /* ── DIARY ── */
+    .diary-form {
+      background: #fdf6f9;
+      border-radius: 16px;
       padding: 1rem;
       border: 1px solid #f5dde8;
+      margin-bottom: 1rem;
     }
 
-    .entry-day {
-      font-family: 'Playfair Display', serif;
+    .form-day-label {
       font-size: 0.9rem;
-      color: #b05a7a;
-      margin-bottom: 0.8rem;
+      font-weight: 700;
       font-style: italic;
+      color: #c0607a;
+      margin-bottom: 0.8rem;
     }
 
     .entry-grid {
@@ -315,15 +342,17 @@
       letter-spacing: 0.5px;
       color: #c0a0b0;
       margin-bottom: 3px;
+      font-weight: 700;
     }
 
     .entry-field input[type="number"] {
       width: 100%;
       padding: 7px 10px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1.5px solid #f5c5d5;
       font-size: 0.88rem;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
       background: #fff;
       color: #3a2a35;
       outline: none;
@@ -331,7 +360,6 @@
 
     .entry-field input:focus { border-color: #c0607a; }
 
-    /* feeling slider */
     .feeling-section { margin-bottom: 10px; }
 
     .feeling-section label {
@@ -341,18 +369,14 @@
       color: #c0a0b0;
       display: block;
       margin-bottom: 6px;
-    }
-
-    .feeling-track {
-      position: relative;
-      padding: 0 4px;
+      font-weight: 700;
     }
 
     input[type="range"].feeling-slider {
       width: 100%;
       -webkit-appearance: none;
-      height: 4px;
-      border-radius: 2px;
+      height: 5px;
+      border-radius: 3px;
       background: linear-gradient(to right, #f5c5d5, #a8d8a8);
       outline: none;
       margin-bottom: 6px;
@@ -360,7 +384,7 @@
 
     input[type="range"].feeling-slider::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 18px; height: 18px;
+      width: 20px; height: 20px;
       border-radius: 50%;
       background: #c0607a;
       cursor: pointer;
@@ -371,17 +395,19 @@
     .feeling-labels {
       display: flex;
       justify-content: space-between;
-      font-size: 9px;
-      color: #c0a0b0;
+      font-size: 12px;
+      color: #b08898;
+      font-weight: 700;
     }
 
     .feeling-display {
       text-align: center;
-      font-size: 0.82rem;
+      font-size: 1rem;
+      font-weight: 700;
       font-style: italic;
-      color: #b05a7a;
-      margin-top: 4px;
-      min-height: 18px;
+      color: #c0607a;
+      margin-top: 6px;
+      min-height: 22px;
     }
 
     .note-section label {
@@ -391,15 +417,17 @@
       color: #c0a0b0;
       display: block;
       margin-bottom: 4px;
+      font-weight: 700;
     }
 
     textarea.note-input {
       width: 100%;
       padding: 8px 10px;
-      border-radius: 8px;
+      border-radius: 10px;
       border: 1.5px solid #f5c5d5;
-      font-size: 0.85rem;
-      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 600;
       background: #fff;
       color: #3a2a35;
       resize: none;
@@ -409,99 +437,75 @@
 
     textarea.note-input:focus { border-color: #c0607a; }
 
-    .save-entry-btn {
-      width: 100%;
-      padding: 9px;
-      border-radius: 10px;
-      border: none;
-      background: #8aba8a;
-      color: #fff;
-      font-size: 0.88rem;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      transition: background 0.2s;
-      margin-top: 10px;
+    /* saved entries */
+    .diary-entries {
+      max-height: 420px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      padding-right: 4px;
     }
 
-    .save-entry-btn:hover { background: #6aa06a; }
+    .diary-entries::-webkit-scrollbar { width: 4px; }
+    .diary-entries::-webkit-scrollbar-thumb { background: #f5c5d5; border-radius: 4px; }
 
-    /* saved entries */
     .saved-entry {
-      background: #fff;
-      border-radius: 12px;
-      padding: 0.9rem;
-      border: 1px solid #e8f5e8;
+      background: #f8fdf8;
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      border: 1px solid #d8eed8;
     }
 
     .saved-entry-day {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.85rem;
-      color: #6aa06a;
-      margin-bottom: 6px;
-      font-style: italic;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #5a9a5a;
+      margin-bottom: 8px;
     }
 
     .saved-entry-details {
       display: flex;
-      gap: 10px;
+      gap: 6px;
       flex-wrap: wrap;
       margin-bottom: 6px;
     }
 
     .saved-pill {
-      background: #f0faf0;
+      background: #eef8ee;
       border: 1px solid #c8e8c8;
       border-radius: 20px;
       padding: 3px 10px;
       font-size: 11px;
+      font-weight: 700;
       color: #4a7a4a;
     }
 
     .saved-note {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: #7a8a7a;
       font-style: italic;
       line-height: 1.5;
+      font-weight: 600;
+      margin-top: 4px;
+      padding-top: 6px;
+      border-top: 1px dashed #d8eed8;
     }
 
     .empty-diary {
       text-align: center;
       font-style: italic;
+      font-weight: 600;
       color: #c0a0b0;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       padding: 1.5rem 0;
     }
 
-    .reset-btn {
-      display: block;
-      margin: 0.8rem auto 0;
-      background: none;
-      border: none;
-      font-size: 11px;
-      color: #c0a0b0;
-      cursor: pointer;
-      text-decoration: underline;
-      font-family: 'Inter', sans-serif;
-    }
-
-    /* log */
-    .log-section { margin-top: 1rem; }
-    .log-title {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #c0a0b0;
-      margin-bottom: 6px;
-    }
-    .log-row {
+    .diary-reset-row {
       display: flex;
-      justify-content: space-between;
-      font-size: 0.82rem;
-      padding: 5px 0;
-      border-bottom: 1px solid #fdf0f5;
-      color: #9a7a88;
+      justify-content: flex-end;
+      margin-top: 0.8rem;
     }
-    .log-row span:last-child { color: #b05a7a; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -513,9 +517,9 @@
 
 <div class="layout">
 
-  <!-- LEFT: thermometer + steps -->
+  <!-- LEFT -->
   <div class="card">
-    <div class="card-title">Step thermometer</div>
+    <div class="card-title">🌡️ Step thermometer</div>
 
     <div class="thermo-section">
       <div class="thermo-outer">
@@ -550,12 +554,11 @@
 
     <div class="message-box" id="message">No steps yet — lace up those shoes! 👟</div>
 
-    <!-- REWARDS — easy to edit! -->
-    <div class="rewards" id="rewardsList"></div>
+    <div id="rewardsList" style="margin-bottom:1rem;"></div>
 
     <div class="input-row">
       <input type="number" id="stepInput" placeholder="Steps today (e.g. 7500)" min="1" />
-      <button onclick="addSteps()">Add steps</button>
+      <button class="btn-pink" onclick="addSteps()">Add steps</button>
     </div>
 
     <div class="log-section" id="logSection" style="display:none">
@@ -563,16 +566,15 @@
       <div id="logList"></div>
     </div>
 
-    <button class="reset-btn" onclick="resetAll()">Reset everything</button>
+    <button class="reset-btn" onclick="resetSteps()">Reset steps</button>
   </div>
 
-  <!-- RIGHT: diary -->
+  <!-- RIGHT -->
   <div class="card">
-    <div class="card-title">Daily diary 📓</div>
+    <div class="card-title">📓 Daily diary</div>
 
-    <!-- new entry form -->
-    <div style="background:#fdf6f9; border-radius:14px; padding:1rem; border:1px solid #f5dde8; margin-bottom:1rem;">
-      <div class="entry-day" id="formDayLabel">Today's entry</div>
+    <div class="diary-form">
+      <div class="form-day-label" id="formDayLabel">Today's entry</div>
 
       <div class="entry-grid">
         <div class="entry-field">
@@ -587,27 +589,28 @@
 
       <div class="feeling-section">
         <label>How are you feeling?</label>
-        <div class="feeling-track">
-          <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
-          <div class="feeling-labels">
-            <span>😩 Exhausted</span>
-            <span>Easy peasy 😄</span>
-          </div>
+        <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
+        <div class="feeling-labels">
+          <span>😩 Absolutely exhausted</span>
+          <span>Easy peasy 😄</span>
         </div>
         <div class="feeling-display" id="feelingDisplay">Getting there 🙂</div>
       </div>
 
       <div class="note-section">
         <label>Notes (optional)</label>
-        <textarea class="note-input" id="noteInput" rows="2" placeholder="Anything to add? Scenic route, sore knees, proud moment..."></textarea>
+        <textarea class="note-input" id="noteInput" rows="2" placeholder="Scenic route, sore knees, proud moment..."></textarea>
       </div>
 
-      <button class="save-entry-btn" onclick="saveDiaryEntry()">Save diary entry 🌿</button>
+      <button class="btn-green" onclick="saveDiaryEntry()">Save entry 🌿</button>
     </div>
 
-    <!-- saved entries -->
     <div class="diary-entries" id="diaryEntries">
       <div class="empty-diary" id="emptyDiary">No entries yet — save your first walk! 🌸</div>
+    </div>
+
+    <div class="diary-reset-row">
+      <button class="reset-btn" onclick="resetDiary()">Reset diary</button>
     </div>
   </div>
 
@@ -617,7 +620,7 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-  // ── EASY TO CHANGE ────────────────────────────────────────────
+  // ── EASY TO CHANGE ──────────────────────────────────────────
   const GOAL = 80000;
 
   const REWARDS = [
@@ -628,15 +631,8 @@
     { steps: 80000, text: "Zac is mom's butler for the day (accent of her choosing) 🎩" },
   ];
 
-  const FEELINGS = [
-    "",
-    "Absolutely exhausted 😩",
-    "Legs are burning 🔥",
-    "Getting there 🙂",
-    "Feeling good 💚",
-    "Easy peasy 😄"
-  ];
-  // ─────────────────────────────────────────────────────────────
+  const FEELINGS = ["", "Absolutely exhausted 😩", "Legs are burning 🔥", "Getting there 🙂", "Feeling good 💚", "Easy peasy 😄"];
+  // ───────────────────────────────────────────────────────────
 
   const firebaseConfig = {
     apiKey: "AIzaSyApfMg-55DRSjQcWtq4Ml2B1yGh3MvZ_TM",
@@ -676,8 +672,7 @@
   }
 
   function renderRewards(total) {
-    const container = document.getElementById("rewardsList");
-    container.innerHTML = REWARDS.map(r => {
+    document.getElementById("rewardsList").innerHTML = REWARDS.map(r => {
       const unlocked = total >= r.steps;
       return `<div class="reward-row">
         <span class="reward-badge ${unlocked ? 'unlocked' : ''}">${(r.steps/1000).toFixed(0)}k</span>
@@ -715,15 +710,13 @@
     document.getElementById("daysLeft").textContent = daysLeft + " day" + (daysLeft !== 1 ? "s" : "") + " left";
     document.getElementById("avgNeeded").textContent = avg.toLocaleString();
     document.getElementById("message").textContent = getMessage(pct);
-
     addTicks();
     renderRewards(total);
 
     const logSection = document.getElementById("logSection");
-    const logList = document.getElementById("logList");
     if (log.length > 0) {
       logSection.style.display = "block";
-      logList.innerHTML = log.slice().reverse().map(e =>
+      document.getElementById("logList").innerHTML = log.slice().reverse().map(e =>
         `<div class="log-row"><span>${e.day}</span><span>${Number(e.steps).toLocaleString()} steps</span></div>`
       ).join("");
     } else {
@@ -737,13 +730,13 @@
     const empty = document.getElementById("emptyDiary");
 
     if (entries.length === 0) {
-      empty.style.display = "block";
+      container.innerHTML = `<div class="empty-diary" id="emptyDiary">No entries yet — save your first walk! 🌸</div>`;
       return;
     }
-    empty.style.display = "none";
+
     container.innerHTML = entries.slice().reverse().map(e => {
       const pills = [];
-      if (e.heartRate) pills.push(`❤️ ${e.heartRate} bpm`);
+      if (e.heartRate) pills.push(`❤️ ${e.heartRate} bpm max`);
       if (e.distance) pills.push(`📍 ${e.distance} km`);
       if (e.feeling) pills.push(FEELINGS[e.feeling]);
       return `<div class="saved-entry">
@@ -756,8 +749,8 @@
 
   async function loadAll() {
     const [sSnap, dSnap] = await Promise.all([getDoc(STEPS_REF), getDoc(DIARY_REF)]);
-    if (sSnap.exists()) renderSteps(sSnap.data()); else renderSteps({});
-    if (dSnap.exists()) renderDiary(dSnap.data()); else renderDiary({});
+    renderSteps(sSnap.exists() ? sSnap.data() : {});
+    renderDiary(dSnap.exists() ? dSnap.data() : {});
     document.getElementById("formDayLabel").textContent = getDayLabel() + "'s entry";
   }
 
@@ -767,10 +760,7 @@
     if (!val || val <= 0) { input.focus(); return; }
     const snap = await getDoc(STEPS_REF);
     const current = snap.exists() ? (snap.data().total || 0) : 0;
-    await setDoc(STEPS_REF, {
-      total: current + val,
-      log: arrayUnion({ day: getDayLabel(), steps: val })
-    }, { merge: true });
+    await setDoc(STEPS_REF, { total: current + val, log: arrayUnion({ day: getDayLabel(), steps: val }) }, { merge: true });
     input.value = "";
     loadAll();
   };
@@ -780,16 +770,14 @@
     const dist = document.getElementById("distance").value;
     const feeling = parseInt(document.getElementById("feelingSlider").value);
     const note = document.getElementById("noteInput").value.trim();
-
     const entry = {
       day: getDayLabel(),
       heartRate: hr ? parseInt(hr) : null,
       distance: dist ? parseFloat(dist) : null,
-      feeling: feeling,
+      feeling,
       note: note || null,
       savedAt: new Date().toISOString()
     };
-
     await setDoc(DIARY_REF, { entries: arrayUnion(entry) }, { merge: true });
     document.getElementById("heartRate").value = "";
     document.getElementById("distance").value = "";
@@ -799,12 +787,16 @@
     loadAll();
   };
 
-  window.resetAll = async function() {
-    if (confirm("Reset all steps and diary entries? This cannot be undone.")) {
-      await Promise.all([
-        setDoc(STEPS_REF, { total: 0, log: [] }),
-        setDoc(DIARY_REF, { entries: [] })
-      ]);
+  window.resetSteps = async function() {
+    if (confirm("Reset all steps? This cannot be undone.")) {
+      await setDoc(STEPS_REF, { total: 0, log: [] });
+      loadAll();
+    }
+  };
+
+  window.resetDiary = async function() {
+    if (confirm("Reset all diary entries? This cannot be undone.")) {
+      await setDoc(DIARY_REF, { entries: [] });
       loadAll();
     }
   };
@@ -814,13 +806,11 @@
   });
 
   const slider = document.getElementById("feelingSlider");
-  const feelingDisplay = document.getElementById("feelingDisplay");
   slider.addEventListener("input", () => {
-    feelingDisplay.textContent = FEELINGS[parseInt(slider.value)];
+    document.getElementById("feelingDisplay").textContent = FEELINGS[parseInt(slider.value)];
   });
 
   loadAll();
 </script>
-
 </body>
 </html>
