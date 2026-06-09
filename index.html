@@ -444,6 +444,8 @@
       container.innerHTML = entries.slice().reverse().map(e => {
         const pills = [];
         if (e.heartRate) pills.push(`${e.heartRate} bpm max`);
+if (e.heartRateAvg) pills.push(`${e.heartRateAvg} bpm avg`);
+
         if (e.distance) pills.push(`${e.distance} km`);
         if (e.feeling) pills.push(FEELINGS[e.feeling]);
         return `<div class="saved-entry">
