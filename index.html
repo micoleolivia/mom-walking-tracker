@@ -178,25 +178,25 @@
     .chart-wrap { position: relative; height: 200px; }
 
     .step-reaction {
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 700;
-  font-style: italic;
-  color: #c0607a;
-  padding: 10px;
-  border-radius: 12px;
-  background: #fdf0f5;
-  border: 1px solid #f5c5d5;
-  margin-top: 0.8rem;
-  display: none;
-  animation: fadeOut 3.5s forwards;
-}
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      font-style: italic;
+      color: #c0607a;
+      padding: 10px;
+      border-radius: 12px;
+      background: #fdf0f5;
+      border: 1px solid #f5c5d5;
+      margin-top: 0.8rem;
+      display: none;
+      animation: fadeOut 3.5s forwards;
+    }
 
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  70% { opacity: 1; }
-  100% { opacity: 0; }
-}
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; }
+    }
   </style>
 </head>
 <body>
@@ -209,7 +209,7 @@
 <div class="layout">
   <!-- LEFT -->
   <div class="card">
-    <div class="card-title">Step thermometer</div>
+    <div class="card-title">🌡️ Step thermometer</div>
     <div class="thermo-section">
       <div class="thermo-outer">
         <div class="thermo-pct" id="pctLabel">0%</div>
@@ -240,13 +240,15 @@
       </div>
     </div>
 
-    <div class="message-box" id="message">No steps yet</div>
+    <div class="message-box" id="message">No steps yet — lace up those shoes! 👟</div>
     <div id="rewardsList" style="margin-bottom:1rem;"></div>
 
     <div class="input-row">
       <input type="number" id="stepInput" placeholder="Steps today (e.g. 7500)" min="1" />
       <button class="btn-pink" onclick="addSteps()">Add steps</button>
     </div>
+
+    <div class="step-reaction" id="stepReaction"></div>
 
     <div class="log-section" id="logSection" style="display:none">
       <div class="log-title">Step log</div>
@@ -257,7 +259,7 @@
 
   <!-- RIGHT -->
   <div class="card">
-    <div class="card-title">Daily diary</div>
+    <div class="card-title">📓 Daily diary</div>
 
     <div class="diary-form">
       <div class="form-day-label" id="formDayLabel">Today's entry</div>
@@ -276,21 +278,21 @@
         <label>How are you feeling?</label>
         <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
         <div class="feeling-labels">
-          <span>Absolutely exhausted</span>
-          <span>Easy peasy</span>
+          <span>😩 Absolutely exhausted</span>
+          <span>Easy peasy 😄</span>
         </div>
-        <div class="feeling-display" id="feelingDisplay">Getting there</div>
+        <div class="feeling-display" id="feelingDisplay">Getting there 🙂</div>
       </div>
 
       <div class="note-section">
         <label>Notes (optional)</label>
-        <textarea class="note-input" id="noteInput" rows="2" placeholder="Something like: My knees hurt or I nearly died or Best walk ever!..."></textarea>
+        <textarea class="note-input" id="noteInput" rows="2" placeholder="Scenic route, sore knees, proud moment..."></textarea>
       </div>
-      <button class="btn-green" onclick="saveDiaryEntry()">Save entry</button>
+      <button class="btn-green" onclick="saveDiaryEntry()">Save entry 🌿</button>
     </div>
 
     <div class="diary-entries" id="diaryEntries">
-      <div class="empty-diary">No entries yet</div>
+      <div class="empty-diary">No entries yet — save your first walk! 🌸</div>
     </div>
     <div class="diary-reset-row">
       <button class="reset-btn" onclick="resetDiary()">Reset diary</button>
@@ -302,15 +304,15 @@
 <div class="layout-full">
   <div class="charts-grid">
     <div class="chart-card">
-      <div class="chart-title">Heart rate by day</div>
-      <div id="hrEmpty" class="chart-empty">No heart rate data yet</div>
+      <div class="chart-title">❤️ Heart rate by day</div>
+      <div id="hrEmpty" class="chart-empty">No heart rate data yet — keep logging! 💓</div>
       <div class="chart-wrap" id="hrWrap" style="display:none">
         <canvas id="hrChart"></canvas>
       </div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Distance by day (km)</div>
-      <div id="distEmpty" class="chart-empty">No distance data yet</div>
+      <div class="chart-title">📍 Distance by day (km)</div>
+      <div id="distEmpty" class="chart-empty">No distance data yet — keep logging! 🥾</div>
       <div class="chart-wrap" id="distWrap" style="display:none">
         <canvas id="distChart"></canvas>
       </div>
@@ -326,13 +328,14 @@
   const GOAL = 80000;
 
   const REWARDS = [
-    { steps: 10000, text: "Zac makes mom a coffee" },
-    { steps: 30000, text: "Micole does the dishes for a week" },
-    { steps: 50000, text: "Micole leaves mom alone for 5 hours of her choosing" },
-    { steps: 80000, text: "Zac is mom's butler for the day - talks in an accent of her choosing (Like Azeem's mini bot, Zac will find out about this as he reads)" },
+    { steps: 10000, text: "Zac makes mom a coffee ☕" },
+    { steps: 30000, text: "Micole does the dishes for a week 🍽️" },
+    { steps: 50000, text: "Micole leaves mom alone for 5 hours of her choosing 🛁" },
+    { steps: 70000, text: "Family dinner — mom picks the restaurant 🍷" },
+    { steps: 80000, text: "Zac is mom's butler for the day (accent of her choosing) 🎩" },
   ];
 
-  const FEELINGS = ["", "Absolutely exhausted", "Legs are burning", "Getting there", "Feeling good", "Easy peasy"];
+  const FEELINGS = ["", "Absolutely exhausted 😩", "Legs are burning 🔥", "Getting there 🙂", "Feeling good 💚", "Easy peasy 😄"];
   // ───────────────────────────────────────────────────────────
 
   const firebaseConfig = {
@@ -366,13 +369,13 @@
   }
 
   function getMessage(pct) {
-    if (pct === 0) return "No steps yet";
-    if (pct < 20) return "The thermometer is barely breathing. Off the couch, please!";
-    if (pct < 40) return "A start! But the Leopard Trail doesn't care about excuses. Keep moving.";
-    if (pct < 60) return "Halfway there! Those legs are warming up nicely.";
-    if (pct < 80) return "Nearly there! The Baviaanskloof would be proud.";
-    if (pct < 100) return "So close! One last push!";
-    return "80,000 steps done. The Leopard Trail doesn't stand a chance!";
+    if (pct === 0) return "No steps yet — lace up those shoes! 👟";
+    if (pct < 20) return "The thermometer is barely breathing. Off the couch, please! 🛋️";
+    if (pct < 40) return "A start! But the Leopard Trail doesn't care about excuses. Keep moving. 🐆";
+    if (pct < 60) return "Halfway there! Those legs are warming up nicely. 💪";
+    if (pct < 80) return "Nearly there! The Baviaanskloof would be proud. 🌿";
+    if (pct < 100) return "So close! One last push — almost trail-ready! 🏔️";
+    return "80,000 steps done. The Leopard Trail doesn't stand a chance! 🎉";
   }
 
   function renderRewards(total) {
@@ -433,7 +436,7 @@
     const container = document.getElementById("diaryEntries");
 
     if (entries.length === 0) {
-      container.innerHTML = `<div class="empty-diary">No entries yet</div>`;
+      container.innerHTML = `<div class="empty-diary">No entries yet — save your first walk! 🌸</div>`;
     } else {
       container.innerHTML = entries.slice().reverse().map(e => {
         const pills = [];
@@ -564,6 +567,14 @@
     document.getElementById("formDayLabel").textContent = getDayLabel() + "'s entry";
   }
 
+  function getStepReaction(steps) {
+    if (steps < 5000) return "Better than nothing... every step counts!";
+    if (steps < 8000) return "Solid effort, keep it up!";
+    if (steps < 10000) return "Great work, right on target!";
+    if (steps < 13000) return "Over 10,000 steps?! Look at those legs go!";
+    return "Who even ARE you?! Absolute machine!";
+  }
+
   window.addSteps = async function() {
     const input = document.getElementById("stepInput");
     const val = parseInt(input.value);
@@ -572,6 +583,13 @@
     const current = snap.exists() ? (snap.data().total || 0) : 0;
     await setDoc(STEPS_REF, { total: current + val, log: arrayUnion({ day: getDayLabel(), steps: val }) }, { merge: true });
     input.value = "";
+    const reaction = document.getElementById("stepReaction");
+    reaction.textContent = getStepReaction(val);
+    reaction.style.display = "block";
+    reaction.style.animation = "none";
+    reaction.offsetHeight;
+    reaction.style.animation = "fadeOut 3.5s forwards";
+    setTimeout(() => { reaction.style.display = "none"; }, 3500);
     loadAll();
   };
 
