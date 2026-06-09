@@ -219,7 +219,7 @@
       </div>
     </div>
 
-    <div class="message-box" id="message">No steps yet — lace up those shoes! 👟</div>
+    <div class="message-box" id="message">No steps yet</div>
     <div id="rewardsList" style="margin-bottom:1rem;"></div>
 
     <div class="input-row">
@@ -236,7 +236,7 @@
 
   <!-- RIGHT -->
   <div class="card">
-    <div class="card-title">📓 Daily diary</div>
+    <div class="card-title">Daily diary</div>
 
     <div class="diary-form">
       <div class="form-day-label" id="formDayLabel">Today's entry</div>
@@ -255,21 +255,21 @@
         <label>How are you feeling?</label>
         <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
         <div class="feeling-labels">
-          <span>😩 Absolutely exhausted</span>
-          <span>Easy peasy 😄</span>
+          <span>Absolutely exhausted</span>
+          <span>Easy peasy</span>
         </div>
-        <div class="feeling-display" id="feelingDisplay">Getting there 🙂</div>
+        <div class="feeling-display" id="feelingDisplay">Getting there</div>
       </div>
 
       <div class="note-section">
         <label>Notes (optional)</label>
         <textarea class="note-input" id="noteInput" rows="2" placeholder="Scenic route, sore knees, proud moment..."></textarea>
       </div>
-      <button class="btn-green" onclick="saveDiaryEntry()">Save entry 🌿</button>
+      <button class="btn-green" onclick="saveDiaryEntry()">Save entry</button>
     </div>
 
     <div class="diary-entries" id="diaryEntries">
-      <div class="empty-diary">No entries yet — save your first walk! 🌸</div>
+      <div class="empty-diary">No entries yet</div>
     </div>
     <div class="diary-reset-row">
       <button class="reset-btn" onclick="resetDiary()">Reset diary</button>
@@ -281,15 +281,15 @@
 <div class="layout-full">
   <div class="charts-grid">
     <div class="chart-card">
-      <div class="chart-title">❤️ Heart rate by day</div>
-      <div id="hrEmpty" class="chart-empty">No heart rate data yet — keep logging! 💓</div>
+      <div class="chart-title">Heart rate by day</div>
+      <div id="hrEmpty" class="chart-empty">No heart rate data yet</div>
       <div class="chart-wrap" id="hrWrap" style="display:none">
         <canvas id="hrChart"></canvas>
       </div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">📍 Distance by day (km)</div>
-      <div id="distEmpty" class="chart-empty">No distance data yet — keep logging! 🥾</div>
+      <div class="chart-title">Distance by day (km)</div>
+      <div id="distEmpty" class="chart-empty">No distance data yet</div>
       <div class="chart-wrap" id="distWrap" style="display:none">
         <canvas id="distChart"></canvas>
       </div>
@@ -305,14 +305,13 @@
   const GOAL = 80000;
 
   const REWARDS = [
-    { steps: 10000, text: "Zac makes mom a coffee ☕" },
-    { steps: 30000, text: "Micole does the dishes for a week 🍽️" },
-    { steps: 50000, text: "Micole leaves mom alone for 5 hours of her choosing 🛁" },
-    { steps: 70000, text: "Family dinner — mom picks the restaurant 🍷" },
-    { steps: 80000, text: "Zac is mom's butler for the day (accent of her choosing) 🎩" },
+    { steps: 10000, text: "Zac makes mom a coffee" },
+    { steps: 30000, text: "Micole does the dishes for a week" },
+    { steps: 50000, text: "Micole leaves mom alone for 5 hours of her choosing" },
+    { steps: 80000, text: "Zac is mom's butler for the day (accent of her choosing)" },
   ];
 
-  const FEELINGS = ["", "Absolutely exhausted 😩", "Legs are burning 🔥", "Getting there 🙂", "Feeling good 💚", "Easy peasy 😄"];
+  const FEELINGS = ["", "Absolutely exhausted", "Legs are burning", "Getting there", "Feeling good", "Easy peasy"];
   // ───────────────────────────────────────────────────────────
 
   const firebaseConfig = {
@@ -346,13 +345,13 @@
   }
 
   function getMessage(pct) {
-    if (pct === 0) return "No steps yet — lace up those shoes! 👟";
-    if (pct < 20) return "The thermometer is barely breathing. Off the couch, please! 🛋️";
-    if (pct < 40) return "A start! But the Leopard Trail doesn't care about excuses. Keep moving. 🐆";
-    if (pct < 60) return "Halfway there! Those legs are warming up nicely. 💪";
-    if (pct < 80) return "Nearly there! The Baviaanskloof would be proud. 🌿";
-    if (pct < 100) return "So close! One last push — almost trail-ready! 🏔️";
-    return "80,000 steps done. The Leopard Trail doesn't stand a chance! 🎉";
+    if (pct === 0) return "No steps yet";
+    if (pct < 20) return "The thermometer is barely breathing. Off the couch, please!";
+    if (pct < 40) return "A start! But the Leopard Trail doesn't care about excuses. Keep moving.";
+    if (pct < 60) return "Halfway there! Those legs are warming up nicely.";
+    if (pct < 80) return "Nearly there! The Baviaanskloof would be proud.";
+    if (pct < 100) return "So close! One last push!";
+    return "80,000 steps done. The Leopard Trail doesn't stand a chance!";
   }
 
   function renderRewards(total) {
