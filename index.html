@@ -439,8 +439,8 @@
     } else {
       container.innerHTML = entries.slice().reverse().map(e => {
         const pills = [];
-        if (e.heartRate) pills.push(`❤️ ${e.heartRate} bpm max`);
-        if (e.distance) pills.push(`📍 ${e.distance} km`);
+        if (e.heartRate) pills.push(`${e.heartRate} bpm max`);
+        if (e.distance) pills.push(`${e.distance} km`);
         if (e.feeling) pills.push(FEELINGS[e.feeling]);
         return `<div class="saved-entry">
           <div class="saved-entry-day">${e.day}</div>
