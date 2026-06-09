@@ -615,6 +615,7 @@ const hrAvg = document.getElementById("heartRateAvg").value;
     };
     await setDoc(DIARY_REF, { entries: arrayUnion(entry) }, { merge: true });
     document.getElementById("heartRate").value = "";
+    document.getElementById("heartRateAvg").value = "";
     document.getElementById("distance").value = "";
     document.getElementById("feelingSlider").value = 3;
     document.getElementById("feelingDisplay").textContent = FEELINGS[3];
