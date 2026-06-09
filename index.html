@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Leopard Trail Prep 🐆</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fdf6f9;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+      color: #3a2a35;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #b05a7a;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      font-size: 0.88rem;
+      color: #b08a9a;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 650px) {
+      .layout { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 1.8rem;
+      box-shadow: 0 4px 24px rgba(180,100,130,0.08);
+      border: 1px solid #f5dde8;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: #b05a7a;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid #f5dde8;
+    }
+
+    /* ── LEFT CARD ── */
+    .thermo-section {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    .thermo-outer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .thermo-pct {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #b05a7a;
+    }
+
+    .thermo-container {
+      position: relative;
+      width: 52px;
+      height: 280px;
+    }
+
+    .thermo-tube {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 44px;
+      width: 26px;
+      height: 222px;
+      background: #fdf0f5;
+      border-radius: 13px 13px 0 0;
+      overflow: hidden;
+      border: 1.5px solid #f5c5d5;
+    }
+
+    .thermo-fill {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, #c0607a, #e8a0b8);
+      border-radius: 13px 13px 0 0;
+      transition: height 1s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+
+    .thermo-bulb {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #c0607a;
+      border: 1.5px solid #f5c5d5;
+      z-index: 2;
+    }
+
+    .tick {
+      position: absolute;
+      right: -42px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tick-line { width: 8px; height: 1px; background: #f5c5d5; }
+    .tick-label { font-size: 10px; color: #c0a0b0; white-space: nowrap; }
+
+    .stats {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-bottom: 44px;
+    }
+
+    .stat {
+      background: #fdf0f5;
+      border-radius: 12px;
+      padding: 10px 12px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #c0a0b0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #b05a7a;
+    }
+
+    .stat-sub { font-size: 10px; color: #c0b0b8; }
+
+    .message-box {
+      background: linear-gradient(135deg, #f0faf0, #e8f5e8);
+      border: 1px solid #c8e8c8;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.88rem;
+      font-style: italic;
+      color: #4a7a4a;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      line-height: 1.5;
+    }
+
+    /* ── REWARDS ── */
+    .rewards {
+      margin-bottom: 1.2rem;
+    }
+
+    .reward-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid #fdf0f5;
+      font-size: 0.82rem;
+    }
+
+    .reward-badge {
+      font-size: 10px;
+      background: #fdf0f5;
+      color: #c0607a;
+      border-radius: 20px;
+      padding: 3px 8px;
+      white-space: nowrap;
+      font-weight: 500;
+      border: 1px solid #f5c5d5;
+      min-width: 54px;
+      text-align: center;
+    }
+
+    .reward-badge.unlocked {
+      background: #e8f5e8;
+      color: #4a8a4a;
+      border-color: #c8e8c8;
+    }
+
+    .reward-text {
+      color: #7a5a68;
+      line-height: 1.4;
+    }
+
+    .reward-text.unlocked {
+      color: #3a6a3a;
+      font-weight: 500;
+    }
+
+    .unlock-tick {
+      margin-left: auto;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .unlock-tick.show { opacity: 1; }
+
+    /* ── INPUT ── */
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0.8rem;
+    }
+
+    .input-row input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1.5px solid #f5c5d5;
+      font-size: 0.9rem;
+      font-family: 'Inter', sans-serif;
+      background: #fdf6f9;
+      color: #3a2a35;
+      outline: none;
+    }
+
+    .input-row input:focus { border-color: #c0607a; }
+
+    .input-row button {
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: none;
+      background: #c0607a;
+      color: #fff;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .input-row button:hover { background: #a04a62; }
+
+    .trail-label {
+      text-align: center;
+      font-size: 10px;
+      color: #c0a0b0;
+      margin-top: 4px;
+    }
+
+    /* ── RIGHT CARD ── */
+    .diary-entries {
+      max-height: 560px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      padding-right: 4px;
+    }
+
+    .diary-entries::-webkit-scrollbar { width: 4px; }
+    .diary-entries::-webkit-scrollbar-thumb { background: #f5c5d5; border-radius: 4px; }
+
+    .diary-entry {
+      background: #fdf0f5;
+      border-radius: 14px;
+      padding: 1rem;
+      border: 1px solid #f5dde8;
+    }
+
+    .entry-day {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.9rem;
+      color: #b05a7a;
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .entry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .entry-field label {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #c0a0b0;
+      margin-bottom: 3px;
+    }
+
+    .entry-field input[type="number"] {
+      width: 100%;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #f5c5d5;
+      font-size: 0.88rem;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #3a2a35;
+      outline: none;
+    }
+
+    .entry-field input:focus { border-color: #c0607a; }
+
+    /* feeling slider */
+    .feeling-section { margin-bottom: 10px; }
+
+    .feeling-section label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #c0a0b0;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .feeling-track {
+      position: relative;
+      padding: 0 4px;
+    }
+
+    input[type="range"].feeling-slider {
+      width: 100%;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(to right, #f5c5d5, #a8d8a8);
+      outline: none;
+      margin-bottom: 6px;
+    }
+
+    input[type="range"].feeling-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: #c0607a;
+      cursor: pointer;
+      border: 2px solid #fff;
+      box-shadow: 0 1px 4px rgba(192,96,122,0.3);
+    }
+
+    .feeling-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 9px;
+      color: #c0a0b0;
+    }
+
+    .feeling-display {
+      text-align: center;
+      font-size: 0.82rem;
+      font-style: italic;
+      color: #b05a7a;
+      margin-top: 4px;
+      min-height: 18px;
+    }
+
+    .note-section label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #c0a0b0;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    textarea.note-input {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #f5c5d5;
+      font-size: 0.85rem;
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #3a2a35;
+      resize: none;
+      outline: none;
+      line-height: 1.5;
+    }
+
+    textarea.note-input:focus { border-color: #c0607a; }
+
+    .save-entry-btn {
+      width: 100%;
+      padding: 9px;
+      border-radius: 10px;
+      border: none;
+      background: #8aba8a;
+      color: #fff;
+      font-size: 0.88rem;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background 0.2s;
+      margin-top: 10px;
+    }
+
+    .save-entry-btn:hover { background: #6aa06a; }
+
+    /* saved entries */
+    .saved-entry {
+      background: #fff;
+      border-radius: 12px;
+      padding: 0.9rem;
+      border: 1px solid #e8f5e8;
+    }
+
+    .saved-entry-day {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      color: #6aa06a;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    .saved-entry-details {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 6px;
+    }
+
+    .saved-pill {
+      background: #f0faf0;
+      border: 1px solid #c8e8c8;
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      color: #4a7a4a;
+    }
+
+    .saved-note {
+      font-size: 0.82rem;
+      color: #7a8a7a;
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .empty-diary {
+      text-align: center;
+      font-style: italic;
+      color: #c0a0b0;
+      font-size: 0.88rem;
+      padding: 1.5rem 0;
+    }
+
+    .reset-btn {
+      display: block;
+      margin: 0.8rem auto 0;
+      background: none;
+      border: none;
+      font-size: 11px;
+      color: #c0a0b0;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* log */
+    .log-section { margin-top: 1rem; }
+    .log-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #c0a0b0;
+      margin-bottom: 6px;
+    }
+    .log-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      padding: 5px 0;
+      border-bottom: 1px solid #fdf0f5;
+      color: #9a7a88;
+    }
+    .log-row span:last-child { color: #b05a7a; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🐆 Leopard Trail Prep</h1>
+  <p>9 June – 19 June · Mom's walking journey</p>
+</header>
+
+<div class="layout">
+
+  <!-- LEFT: thermometer + steps -->
+  <div class="card">
+    <div class="card-title">Step thermometer</div>
+
+    <div class="thermo-section">
+      <div class="thermo-outer">
+        <div class="thermo-pct" id="pctLabel">0%</div>
+        <div class="thermo-container">
+          <div class="thermo-tube" id="tube">
+            <div class="thermo-fill" id="fill" style="height:0%"></div>
+          </div>
+          <div class="thermo-bulb"></div>
+        </div>
+        <div class="trail-label" id="trailLabel">0 / 80,000</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-label">Total steps</div>
+          <div class="stat-value" id="totalSteps">0</div>
+          <div class="stat-sub">of 80,000</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Steps to go</div>
+          <div class="stat-value" id="stepsLeft">80,000</div>
+          <div class="stat-sub" id="daysLeft">10 days left</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Avg needed/day</div>
+          <div class="stat-value" id="avgNeeded">8,000</div>
+          <div class="stat-sub">to hit goal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="message-box" id="message">No steps yet — lace up those shoes! 👟</div>
+
+    <!-- REWARDS — easy to edit! -->
+    <div class="rewards" id="rewardsList"></div>
+
+    <div class="input-row">
+      <input type="number" id="stepInput" placeholder="Steps today (e.g. 7500)" min="1" />
+      <button onclick="addSteps()">Add steps</button>
+    </div>
+
+    <div class="log-section" id="logSection" style="display:none">
+      <div class="log-title">Step log</div>
+      <div id="logList"></div>
+    </div>
+
+    <button class="reset-btn" onclick="resetAll()">Reset everything</button>
+  </div>
+
+  <!-- RIGHT: diary -->
+  <div class="card">
+    <div class="card-title">Daily diary 📓</div>
+
+    <!-- new entry form -->
+    <div style="background:#fdf6f9; border-radius:14px; padding:1rem; border:1px solid #f5dde8; margin-bottom:1rem;">
+      <div class="entry-day" id="formDayLabel">Today's entry</div>
+
+      <div class="entry-grid">
+        <div class="entry-field">
+          <label>Max heart rate (bpm)</label>
+          <input type="number" id="heartRate" placeholder="e.g. 142" min="60" max="220" />
+        </div>
+        <div class="entry-field">
+          <label>Distance (km)</label>
+          <input type="number" id="distance" placeholder="e.g. 4.2" step="0.1" min="0" />
+        </div>
+      </div>
+
+      <div class="feeling-section">
+        <label>How are you feeling?</label>
+        <div class="feeling-track">
+          <input type="range" class="feeling-slider" id="feelingSlider" min="1" max="5" value="3" step="1" />
+          <div class="feeling-labels">
+            <span>😩 Exhausted</span>
+            <span>Easy peasy 😄</span>
+          </div>
+        </div>
+        <div class="feeling-display" id="feelingDisplay">Getting there 🙂</div>
+      </div>
+
+      <div class="note-section">
+        <label>Notes (optional)</label>
+        <textarea class="note-input" id="noteInput" rows="2" placeholder="Anything to add? Scenic route, sore knees, proud moment..."></textarea>
+      </div>
+
+      <button class="save-entry-btn" onclick="saveDiaryEntry()">Save diary entry 🌿</button>
+    </div>
+
+    <!-- saved entries -->
+    <div class="diary-entries" id="diaryEntries">
+      <div class="empty-diary" id="emptyDiary">No entries yet — save your first walk! 🌸</div>
+    </div>
+  </div>
+
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // ── EASY TO CHANGE ────────────────────────────────────────────
+  const GOAL = 80000;
+
+  const REWARDS = [
+    { steps: 10000, text: "Zac makes mom a coffee ☕" },
+    { steps: 30000, text: "Micole does the dishes for a week 🍽️" },
+    { steps: 50000, text: "Micole leaves mom alone for 5 hours of her choosing 🛁" },
+    { steps: 70000, text: "Family dinner — mom picks the restaurant 🍷" },
+    { steps: 80000, text: "Zac is mom's butler for the day (accent of her choosing) 🎩" },
+  ];
+
+  const FEELINGS = [
+    "",
+    "Absolutely exhausted 😩",
+    "Legs are burning 🔥",
+    "Getting there 🙂",
+    "Feeling good 💚",
+    "Easy peasy 😄"
+  ];
+  // ─────────────────────────────────────────────────────────────
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyApfMg-55DRSjQcWtq4Ml2B1yGh3MvZ_TM",
+    authDomain: "worldcup2026-a5bd7.firebaseapp.com",
+    projectId: "worldcup2026-a5bd7",
+    storageBucket: "worldcup2026-a5bd7.firebasestorage.app",
+    messagingSenderId: "358912564554",
+    appId: "1:358912564554:web:5ae46c7c186a4918f2b5b3"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const STEPS_REF = doc(db, "walking_tracker", "mom_steps");
+  const DIARY_REF = doc(db, "walking_tracker", "mom_diary");
+
+  const DAYS = ["Mon 9 Jun","Tue 10 Jun","Wed 11 Jun","Thu 12 Jun","Fri 13 Jun",
+                "Sat 14 Jun","Sun 15 Jun","Mon 16 Jun","Tue 17 Jun","Wed 18 Jun","Thu 19 Jun"];
+  const START = new Date("2026-06-09");
+
+  function getDayLabel() {
+    const diff = Math.floor((new Date() - START) / 86400000);
+    return DAYS[Math.min(Math.max(diff, 0), DAYS.length - 1)];
+  }
+
+  function getDaysLeft() {
+    return Math.max(0, Math.ceil((new Date("2026-06-19") - new Date()) / 86400000));
+  }
+
+  function getMessage(pct) {
+    if (pct === 0) return "No steps yet — lace up those shoes! 👟";
+    if (pct < 20) return "The thermometer is barely breathing. Off the couch, please! 🛋️";
+    if (pct < 40) return "A start! But the Leopard Trail doesn't care about excuses. Keep moving. 🐆";
+    if (pct < 60) return "Halfway there! Those legs are warming up nicely. 💪";
+    if (pct < 80) return "Nearly there! The Baviaanskloof would be proud. 🌿";
+    if (pct < 100) return "So close! One last push — almost trail-ready! 🏔️";
+    return "80,000 steps done. The Leopard Trail doesn't stand a chance! 🎉";
+  }
+
+  function renderRewards(total) {
+    const container = document.getElementById("rewardsList");
+    container.innerHTML = REWARDS.map(r => {
+      const unlocked = total >= r.steps;
+      return `<div class="reward-row">
+        <span class="reward-badge ${unlocked ? 'unlocked' : ''}">${(r.steps/1000).toFixed(0)}k</span>
+        <span class="reward-text ${unlocked ? 'unlocked' : ''}">${r.text}</span>
+        <span class="unlock-tick ${unlocked ? 'show' : ''}">✅</span>
+      </div>`;
+    }).join("");
+  }
+
+  function addTicks() {
+    const tube = document.getElementById("tube");
+    tube.querySelectorAll(".tick").forEach(t => t.remove());
+    [25, 50, 75, 100].forEach(m => {
+      const tick = document.createElement("div");
+      tick.className = "tick";
+      tick.style.bottom = m + "%";
+      tick.innerHTML = `<div class="tick-line"></div><div class="tick-label">${(GOAL * m / 100 / 1000).toFixed(0)}k</div>`;
+      tube.appendChild(tick);
+    });
+  }
+
+  function renderSteps(data) {
+    const total = data.total || 0;
+    const log = data.log || [];
+    const pct = Math.min(100, Math.round((total / GOAL) * 100));
+    const left = Math.max(0, GOAL - total);
+    const daysLeft = getDaysLeft();
+    const avg = daysLeft > 0 ? Math.ceil(left / daysLeft) : 0;
+
+    document.getElementById("fill").style.height = pct + "%";
+    document.getElementById("pctLabel").textContent = pct + "%";
+    document.getElementById("trailLabel").textContent = total.toLocaleString() + " / " + GOAL.toLocaleString();
+    document.getElementById("totalSteps").textContent = total.toLocaleString();
+    document.getElementById("stepsLeft").textContent = left.toLocaleString();
+    document.getElementById("daysLeft").textContent = daysLeft + " day" + (daysLeft !== 1 ? "s" : "") + " left";
+    document.getElementById("avgNeeded").textContent = avg.toLocaleString();
+    document.getElementById("message").textContent = getMessage(pct);
+
+    addTicks();
+    renderRewards(total);
+
+    const logSection = document.getElementById("logSection");
+    const logList = document.getElementById("logList");
+    if (log.length > 0) {
+      logSection.style.display = "block";
+      logList.innerHTML = log.slice().reverse().map(e =>
+        `<div class="log-row"><span>${e.day}</span><span>${Number(e.steps).toLocaleString()} steps</span></div>`
+      ).join("");
+    } else {
+      logSection.style.display = "none";
+    }
+  }
+
+  function renderDiary(data) {
+    const entries = data.entries || [];
+    const container = document.getElementById("diaryEntries");
+    const empty = document.getElementById("emptyDiary");
+
+    if (entries.length === 0) {
+      empty.style.display = "block";
+      return;
+    }
+    empty.style.display = "none";
+    container.innerHTML = entries.slice().reverse().map(e => {
+      const pills = [];
+      if (e.heartRate) pills.push(`❤️ ${e.heartRate} bpm`);
+      if (e.distance) pills.push(`📍 ${e.distance} km`);
+      if (e.feeling) pills.push(FEELINGS[e.feeling]);
+      return `<div class="saved-entry">
+        <div class="saved-entry-day">${e.day}</div>
+        <div class="saved-entry-details">${pills.map(p => `<span class="saved-pill">${p}</span>`).join("")}</div>
+        ${e.note ? `<div class="saved-note">"${e.note}"</div>` : ""}
+      </div>`;
+    }).join("");
+  }
+
+  async function loadAll() {
+    const [sSnap, dSnap] = await Promise.all([getDoc(STEPS_REF), getDoc(DIARY_REF)]);
+    if (sSnap.exists()) renderSteps(sSnap.data()); else renderSteps({});
+    if (dSnap.exists()) renderDiary(dSnap.data()); else renderDiary({});
+    document.getElementById("formDayLabel").textContent = getDayLabel() + "'s entry";
+  }
+
+  window.addSteps = async function() {
+    const input = document.getElementById("stepInput");
+    const val = parseInt(input.value);
+    if (!val || val <= 0) { input.focus(); return; }
+    const snap = await getDoc(STEPS_REF);
+    const current = snap.exists() ? (snap.data().total || 0) : 0;
+    await setDoc(STEPS_REF, {
+      total: current + val,
+      log: arrayUnion({ day: getDayLabel(), steps: val })
+    }, { merge: true });
+    input.value = "";
+    loadAll();
+  };
+
+  window.saveDiaryEntry = async function() {
+    const hr = document.getElementById("heartRate").value;
+    const dist = document.getElementById("distance").value;
+    const feeling = parseInt(document.getElementById("feelingSlider").value);
+    const note = document.getElementById("noteInput").value.trim();
+
+    const entry = {
+      day: getDayLabel(),
+      heartRate: hr ? parseInt(hr) : null,
+      distance: dist ? parseFloat(dist) : null,
+      feeling: feeling,
+      note: note || null,
+      savedAt: new Date().toISOString()
+    };
+
+    await setDoc(DIARY_REF, { entries: arrayUnion(entry) }, { merge: true });
+    document.getElementById("heartRate").value = "";
+    document.getElementById("distance").value = "";
+    document.getElementById("feelingSlider").value = 3;
+    document.getElementById("feelingDisplay").textContent = FEELINGS[3];
+    document.getElementById("noteInput").value = "";
+    loadAll();
+  };
+
+  window.resetAll = async function() {
+    if (confirm("Reset all steps and diary entries? This cannot be undone.")) {
+      await Promise.all([
+        setDoc(STEPS_REF, { total: 0, log: [] }),
+        setDoc(DIARY_REF, { entries: [] })
+      ]);
+      loadAll();
+    }
+  };
+
+  document.getElementById("stepInput").addEventListener("keydown", e => {
+    if (e.key === "Enter") window.addSteps();
+  });
+
+  const slider = document.getElementById("feelingSlider");
+  const feelingDisplay = document.getElementById("feelingDisplay");
+  slider.addEventListener("input", () => {
+    feelingDisplay.textContent = FEELINGS[parseInt(slider.value)];
+  });
+
+  loadAll();
+</script>
+
+</body>
+</html>
