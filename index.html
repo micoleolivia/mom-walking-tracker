@@ -356,7 +356,7 @@
   const DIARY_REF = doc(db, "walking_tracker", "mom_diary");
 
   const DAYS = ["Mon 9 Jun","Tue 10 Jun","Wed 11 Jun","Thu 12 Jun","Fri 13 Jun",
-                "Sat 14 Jun","Sun 15 Jun","Mon 16 Jun","Tue 17 Jun","Wed 18 Jun","Thu 19 Jun"];
+                "Sat 14 Jun","Sun 15 Jun","Mon 16 Jun","Tue 17 Jun","Wed 18 Jun","Thu 19 Jun","Fri 20 Jun"];
   const START = new Date("2026-06-09");
 
   let hrChartInstance = null;
@@ -368,7 +368,7 @@
   }
 
   function getDaysLeft() {
-    return Math.max(0, Math.ceil((new Date("2026-06-19") - new Date()) / 86400000));
+    return Math.max(0, Math.ceil((new Date("2026-06-20") - new Date()) / 86400000));
   }
 
   function getMessage(pct) {
